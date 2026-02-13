@@ -1,0 +1,640 @@
+[gd_scene format=3 uid="uid://drxgxfumap35p"]
+
+[ext_resource type="Script" uid="uid://snytqq2b4uks" path="res://Scripts/Game/main.gd" id="1_4kpch"]
+[ext_resource type="Texture2D" uid="uid://imkpdix14mn7" path="res://assets/Textures/Grass/Grass004_1K-JPG_Color.jpg" id="1_idj7w"]
+[ext_resource type="Texture2D" uid="uid://cixfwsw7j2drh" path="res://assets/Foliage/Flat/sprite_0005.png" id="1_jw32o"]
+[ext_resource type="Texture2D" uid="uid://dc08whyf0x5sr" path="res://assets/Textures/Grass/Grass004_1K-JPG_NormalDX.jpg" id="2_kln2b"]
+[ext_resource type="PackedScene" uid="uid://cr2ersq7g6q6f" path="res://Scenes/player.tscn" id="3_kln2b"]
+[ext_resource type="Texture2D" uid="uid://h6uuqcwbkuhw" path="res://assets/Textures/Rock/Rock060_1K-JPG_Color.jpg" id="3_v1gob"]
+[ext_resource type="Texture2D" uid="uid://bc35aadwmd5ih" path="res://assets/Textures/Rock/Rock060_1K-JPG_NormalGL.jpg" id="4_jw32o"]
+[ext_resource type="Script" uid="uid://d1eeycpyg2v3t" path="res://Scripts/Character/Player.gd" id="4_rgh2o"]
+[ext_resource type="Texture2D" uid="uid://ej8gli7nvlm5" path="res://assets/Textures/Sand/Ground054_1K-JPG_Color.jpg" id="8_grg3l"]
+[ext_resource type="Texture2D" uid="uid://d4kamp8kgaiao" path="res://assets/Textures/Sand/Ground054_1K-JPG_NormalDX.jpg" id="9_frkhe"]
+[ext_resource type="PackedScene" uid="uid://d0h6ntqnk3yju" path="res://Scenes/trash.tscn" id="12_grg3l"]
+[ext_resource type="PackedScene" uid="uid://7apdh8hil4ot" path="res://Scenes/purifier.tscn" id="13_frkhe"]
+[ext_resource type="Script" uid="uid://calwr73qbo4fs" path="res://Scripts/Game/TrashSpawner.gd" id="14_1p5hy"]
+[ext_resource type="PackedScene" uid="uid://rgo73of5d38h" path="res://Scenes/trash2.tscn" id="14_h1m7h"]
+[ext_resource type="PackedScene" uid="uid://bu14tgdgb0wla" path="res://Scenes/trash3.tscn" id="15_h1m7h"]
+[ext_resource type="PackedScene" uid="uid://b5vbfork5mmre" path="res://Scenes/trash4.tscn" id="16_erwvk"]
+[ext_resource type="Script" uid="uid://pctdl0njt52j" path="res://addons/proton_scatter/src/scatter.gd" id="17_aht7i"]
+[ext_resource type="Script" uid="uid://beuyiri1531qq" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="18_5jffn"]
+[ext_resource type="Script" uid="uid://dnynhl2w8jajl" path="res://addons/proton_scatter/src/modifiers/base_modifier.gd" id="19_kpo4j"]
+[ext_resource type="Script" uid="uid://bnb4ff5rg4nl5" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="20_4n42c"]
+[ext_resource type="Script" uid="uid://cwwc4nswicvnv" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="21_c5snn"]
+[ext_resource type="Script" uid="uid://uk5r3f3wbt34" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="22_xvtyr"]
+[ext_resource type="Script" uid="uid://d03k8k222etyj" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="23_u7mjy"]
+[ext_resource type="Script" uid="uid://4bsn68h3d645" path="res://addons/proton_scatter/src/scatter_item.gd" id="24_4yxf6"]
+[ext_resource type="Script" uid="uid://cqsnw0lby55s1" path="res://addons/proton_scatter/src/modifiers/project_on_terrain3d.gd" id="24_5jffn"]
+[ext_resource type="Script" uid="uid://dy4iv48qbe3ig" path="res://addons/proton_scatter/src/scatter_shape.gd" id="25_qta6b"]
+[ext_resource type="Script" uid="uid://dhtpsn1bpb6co" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="26_x3rx7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rgh2o"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_pbw6q"]
+sky_material = SubResource("ProceduralSkyMaterial_rgh2o")
+
+[sub_resource type="Environment" id="Environment_v1gob"]
+background_mode = 2
+sky = SubResource("Sky_pbw6q")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Shader" id="Shader_jw32o"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform sampler2D texture_refraction : filter_linear_mipmap, repeat_enable;
+uniform float refraction : hint_range(-1.0, 1.0, 0.001);
+uniform vec4 refraction_texture_channel;
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear_mipmap;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
+
+uniform sampler2D texture_normal : hint_roughness_normal, filter_linear_mipmap, repeat_enable;
+uniform float normal_scale : hint_range(-16.0, 16.0);
+varying vec3 uv1_triplanar_pos;
+
+uniform float uv1_blend_sharpness : hint_range(0.0, 150.0, 0.001);
+varying vec3 uv1_power_normal;
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+void vertex() {
+	vec3 normal = MODEL_NORMAL_MATRIX * NORMAL;
+
+	TANGENT = vec3(0.0, 0.0, -1.0) * abs(normal.x);
+	TANGENT += vec3(1.0, 0.0, 0.0) * abs(normal.y);
+	TANGENT += vec3(1.0, 0.0, 0.0) * abs(normal.z);
+	TANGENT = inverse(MODEL_NORMAL_MATRIX) * normalize(TANGENT);
+
+	BINORMAL = vec3(0.0, 1.0, 0.0) * abs(normal.x);
+	BINORMAL += vec3(0.0, 0.0, -1.0) * abs(normal.y);
+	BINORMAL += vec3(0.0, 1.0, 0.0) * abs(normal.z);
+	BINORMAL = inverse(MODEL_NORMAL_MATRIX) * normalize(BINORMAL);
+
+	// UV1 Triplanar: Enabled (with World Triplanar)
+	uv1_power_normal = pow(abs(normal), vec3(uv1_blend_sharpness));
+	uv1_triplanar_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz * uv1_scale + uv1_offset + TIME * 0.01;
+	uv1_power_normal /= dot(uv1_power_normal, vec3(1.0));
+	uv1_triplanar_pos *= vec3(1.0, -1.0, 1.0);
+}
+
+vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos) {
+	vec4 samp = vec4(0.0);
+	samp += texture(p_sampler, p_triplanar_pos.xy) * p_weights.z;
+	samp += texture(p_sampler, p_triplanar_pos.xz) * p_weights.y;
+	samp += texture(p_sampler, p_triplanar_pos.zy * vec2(-1.0, 1.0)) * p_weights.x;
+	return samp;
+}
+
+void fragment() {
+	vec4 albedo_tex = triplanar_texture(texture_albedo, uv1_power_normal, uv1_triplanar_pos);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+	float metallic_tex = dot(triplanar_texture(texture_metallic, uv1_power_normal, uv1_triplanar_pos), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(triplanar_texture(texture_roughness, uv1_power_normal, uv1_triplanar_pos), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+
+	// Normal Map: Enabled
+	NORMAL_MAP = triplanar_texture(texture_normal, uv1_power_normal, uv1_triplanar_pos).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+
+	// Refraction: Enabled (with normal map texture)
+	vec3 unpacked_normal = NORMAL_MAP;
+	unpacked_normal.xy = unpacked_normal.xy * 2.0 - 1.0;
+	unpacked_normal.z = sqrt(max(0.0, 1.0 - dot(unpacked_normal.xy, unpacked_normal.xy)));
+	vec3 ref_normal = normalize(mix(
+			NORMAL,
+			TANGENT * unpacked_normal.x + BINORMAL * unpacked_normal.y + NORMAL * unpacked_normal.z,
+			NORMAL_MAP_DEPTH));
+	vec2 ref_ofs = SCREEN_UV - ref_normal.xy * dot(triplanar_texture(texture_refraction, uv1_power_normal, uv1_triplanar_pos), refraction_texture_channel) * refraction;
+
+	float ref_amount = 1.0 - albedo.a * albedo_tex.a;
+
+	float refraction_depth_tex = textureLod(depth_texture, ref_ofs, 0.0).r;
+	vec4 ndc = OUTPUT_IS_SRGB ? vec4(vec3(SCREEN_UV, refraction_depth_tex) * 2.0 - 1.0, 1.0) : vec4(SCREEN_UV * 2.0 - 1.0, refraction_depth_tex, 1.0);
+	vec4 refraction_view_pos = INV_PROJECTION_MATRIX * ndc;
+	refraction_view_pos.xyz /= refraction_view_pos.w;
+
+	// If the depth buffer is lower then the model's Z position, use the refracted UV, otherwise use the normal screen UV.
+	// At low depth differences, decrease refraction intensity to avoid sudden discontinuities.
+	EMISSION += textureLod(screen_texture, mix(SCREEN_UV, ref_ofs, smoothstep(0.0, 1.0, VERTEX.z - refraction_view_pos.z)), ROUGHNESS * 8.0).rgb * ref_amount * EXPOSURE;
+	ALBEDO *= 1.0 - ref_amount;
+	// Force transparency on the material (required for refraction).
+	ALPHA = 1.0;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jw32o"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_50glp"]
+noise = SubResource("FastNoiseLite_jw32o")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_50glp"]
+render_priority = 0
+shader = SubResource("Shader_jw32o")
+shader_parameter/albedo = Color(0.047058824, 0.31764707, 0.46666667, 0.5058824)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/texture_refraction = SubResource("NoiseTexture2D_50glp")
+shader_parameter/refraction = 0.05
+shader_parameter/refraction_texture_channel = Vector4(1, 0, 0, 0)
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_50glp")
+shader_parameter/normal_scale = 1.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.04, 0.04, 0.04)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bmxlf"]
+material = SubResource("ShaderMaterial_50glp")
+
+[sub_resource type="Gradient" id="Gradient_jw32o"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_50glp"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vy5pj"]
+noise = SubResource("FastNoiseLite_50glp")
+color_ramp = SubResource("Gradient_jw32o")
+seamless = true
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_bmxlf"]
+_shader_parameters = {
+&"bias_distance": 512.0,
+&"blend_sharpness": 0.5,
+&"depth_blur": 0.0,
+&"enable_macro_variation": true,
+&"enable_projection": true,
+&"flat_terrain_normals": false,
+&"macro_variation1": Color(1, 1, 1, 1),
+&"macro_variation2": Color(1, 1, 1, 1),
+&"macro_variation_slope": 0.333,
+&"mipmap_bias": 1.0,
+&"noise1_angle": 0.0,
+&"noise1_offset": Vector2(0.5, 0.5),
+&"noise1_scale": 0.04,
+&"noise2_scale": 0.076,
+&"noise_texture": SubResource("NoiseTexture2D_vy5pj"),
+&"projection_threshold": 0.8
+}
+world_background = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kpch"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0.4874007, 1.92523e-07, 1)
+albedo_texture = ExtResource("1_jw32o")
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_grg3l"]
+generated_type = 1
+height_offset = 0.5
+material_override = SubResource("StandardMaterial3D_4kpch")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6heos"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_bmxlf"]
+id = 1
+enabled = false
+generated_type = 1
+height_offset = 0.5
+material_override = SubResource("StandardMaterial3D_6heos")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1p5hy"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_frkhe"]
+id = 2
+enabled = false
+generated_type = 1
+height_offset = 0.5
+material_override = SubResource("StandardMaterial3D_1p5hy")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_frkhe"]
+name = "Grass004_1K-JPG_Color"
+albedo_texture = ExtResource("1_idj7w")
+normal_texture = ExtResource("2_kln2b")
+uv_scale = 2.0
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_v1gob"]
+name = "Rock060_1K-JPG_Color"
+id = 1
+albedo_texture = ExtResource("3_v1gob")
+normal_texture = ExtResource("4_jw32o")
+
+[sub_resource type="Terrain3DTextureAsset" id="Terrain3DTextureAsset_1p5hy"]
+name = "Ground054_1K-JPG_Color"
+id = 2
+albedo_texture = ExtResource("8_grg3l")
+normal_texture = ExtResource("9_frkhe")
+
+[sub_resource type="Terrain3DAssets" id="Terrain3DAssets_1p5hy"]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_grg3l"), SubResource("Terrain3DMeshAsset_bmxlf"), SubResource("Terrain3DMeshAsset_frkhe")])
+texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_frkhe"), SubResource("Terrain3DTextureAsset_v1gob"), SubResource("Terrain3DTextureAsset_1p5hy")])
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5jffn"]
+size = Vector3(235.21986, 1, 252.40012)
+
+[sub_resource type="Resource" id="Resource_5jffn"]
+script = ExtResource("20_4n42c")
+amount = 800
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_c5snn"]
+script = ExtResource("21_c5snn")
+position = Vector3(0.15, 0.15, 0.15)
+scale = Vector3(0.1, 0.1, 0.1)
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_xvtyr"]
+script = ExtResource("22_xvtyr")
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+restrict_height = true
+
+[sub_resource type="Resource" id="Resource_u7mjy"]
+script = ExtResource("23_u7mjy")
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+
+[sub_resource type="Resource" id="Resource_4yxf6"]
+script = ExtResource("24_5jffn")
+terrain_node = NodePath("../Terrain3D")
+target_texture_id = 2
+not_target_texture = true
+
+[sub_resource type="Resource" id="Resource_qta6b"]
+script = ExtResource("18_5jffn")
+stack = Array[ExtResource("19_kpo4j")]([SubResource("Resource_5jffn"), SubResource("Resource_c5snn"), SubResource("Resource_xvtyr"), SubResource("Resource_u7mjy"), SubResource("Resource_4yxf6")])
+
+[sub_resource type="Resource" id="Resource_x3rx7"]
+script = ExtResource("26_x3rx7")
+radius = 162.1425
+metadata/_custom_type_script = "uid://dhtpsn1bpb6co"
+
+[sub_resource type="Resource" id="Resource_vvnwx"]
+script = ExtResource("20_4n42c")
+amount = 2000
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_btbly"]
+script = ExtResource("21_c5snn")
+position = Vector3(0.15, 0.15, 0.15)
+scale = Vector3(0.1, 0.1, 0.1)
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_vs04g"]
+script = ExtResource("22_xvtyr")
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+restrict_height = true
+
+[sub_resource type="Resource" id="Resource_6ehlx"]
+script = ExtResource("23_u7mjy")
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+
+[sub_resource type="Resource" id="Resource_kpo4j"]
+script = ExtResource("24_5jffn")
+terrain_node = NodePath("../Terrain3D")
+enable_texture_filtering = true
+target_texture_id = 2
+not_target_texture = true
+
+[sub_resource type="Resource" id="Resource_utia5"]
+script = ExtResource("18_5jffn")
+stack = Array[ExtResource("19_kpo4j")]([SubResource("Resource_vvnwx"), SubResource("Resource_btbly"), SubResource("Resource_vs04g"), SubResource("Resource_6ehlx"), SubResource("Resource_kpo4j")])
+
+[sub_resource type="Resource" id="Resource_4n42c"]
+script = ExtResource("26_x3rx7")
+radius = 190.17982
+metadata/_custom_type_script = "uid://dhtpsn1bpb6co"
+
+[node name="Main" type="Node3D" unique_id=305395940]
+script = ExtResource("1_4kpch")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2097193954]
+environment = SubResource("Environment_v1gob")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1626864605]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Water" type="MeshInstance3D" parent="." unique_id=1921172129]
+transform = Transform3D(340.02734, 0, 0, 0, 19.111141, 0, 0, 0, 452.37125, -86.723, 12, -22.518038)
+mesh = SubResource("BoxMesh_bmxlf")
+
+[node name="Terrain3D" type="Terrain3D" parent="." unique_id=2094758464 groups=["terrain"]]
+data_directory = "res://Terrain3DData"
+material = SubResource("Terrain3DMaterial_bmxlf")
+assets = SubResource("Terrain3DAssets_1p5hy")
+top_level = true
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." unique_id=1049833977 groups=["player"] instance=ExtResource("3_kln2b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -81.473724, 26.544777, -2.5346718)
+collision_layer = 3
+script = ExtResource("4_rgh2o")
+walk_speed = 3.0
+run_speed = 6.0
+water_path = NodePath("../Water")
+
+[node name="Purifier" parent="." unique_id=1630797164 instance=ExtResource("13_frkhe")]
+transform = Transform3D(7.388241, 0, 0, 0, 7.388241, 0, 0, 0, 7.388241, -93.442474, 29.624868, -12.633112)
+
+[node name="TrashSpawner" type="Node3D" parent="." unique_id=2064333342 node_paths=PackedStringArray("spawn_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.20838, -118.24538, -18.458118)
+script = ExtResource("14_1p5hy")
+trash_scene = ExtResource("12_grg3l")
+trash_meshes = Array[PackedScene]([ExtResource("12_grg3l"), ExtResource("14_h1m7h"), ExtResource("15_h1m7h"), ExtResource("16_erwvk")])
+spawn_area = NodePath("SpawnArea")
+
+[node name="SpawnArea" type="StaticBody3D" parent="TrashSpawner" unique_id=1872950693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0355492, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrashSpawner/SpawnArea" unique_id=1116894924]
+transform = Transform3D(0.99991447, 0.0056281188, -0.011803592, -0.005691455, 0.99996954, -0.0053375615, 0.011773182, 0.005404304, 0.9999161, 3.3306732, 101.28548, 11.491497)
+shape = SubResource("BoxShape3D_5jffn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1334187872]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=80304466]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HUD" type="Panel" parent="CanvasLayer/Control" unique_id=123796230]
+layout_mode = 0
+offset_right = 330.0
+offset_bottom = 196.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HUD" unique_id=2010705419]
+layout_mode = 0
+offset_right = 331.0
+offset_bottom = 197.0
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=395729499]
+layout_mode = 2
+text = "Загаденост:"
+horizontal_alignment = 1
+
+[node name="PollutionBar" type="ProgressBar" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=983312121]
+layout_mode = 2
+
+[node name="Trash" type="Label" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=1587774319]
+layout_mode = 2
+text = "Собран отпад: 0/0"
+horizontal_alignment = 1
+
+[node name="TimeElapsed" type="Label" parent="CanvasLayer/Control/HUD/VBoxContainer" unique_id=248471277]
+layout_mode = 2
+text = "Изминато време: 0 s."
+horizontal_alignment = 1
+
+[node name="GameOverPanel" type="Panel" parent="CanvasLayer/Control" unique_id=523445561]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/GameOverPanel" unique_id=315192062]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.79607844, 0, 0, 0.4745098)
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/GameOverPanel" unique_id=782612204]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/GameOverPanel/Control" unique_id=2079683931]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -87.5
+offset_right = 87.5
+offset_bottom = 49.0
+grow_horizontal = 2
+text = "Езерото не е спасено!
+Обиди се повторно?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAgainBtn" type="Button" parent="CanvasLayer/Control/GameOverPanel/Control" unique_id=2091841370]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Играј повторно"
+
+[node name="GameWonPanel" type="Panel" parent="CanvasLayer/Control" unique_id=622398906]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/GameWonPanel" unique_id=544739976]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.9490196, 0, 0.4627451)
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/GameWonPanel" unique_id=2144819275]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/GameWonPanel/Control" unique_id=1879420510]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.5
+offset_right = 75.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Езерото е спасено!"
+horizontal_alignment = 1
+
+[node name="PlayAgainBtn" type="Button" parent="CanvasLayer/Control/GameWonPanel/Control" unique_id=1614108265]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -31.0
+offset_right = 67.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Играј повторно"
+
+[node name="ProtonScatterRocks" type="Node3D" parent="." unique_id=608274616]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -110.44356, 45.73944, 11.83341)
+script = ExtResource("17_aht7i")
+keep_static_colliders = true
+modifier_stack = SubResource("Resource_qta6b")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+metadata/_custom_type_script = "uid://pctdl0njt52j"
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatterRocks" unique_id=356553240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4846115, 0, -5.4435806)
+script = ExtResource("24_4yxf6")
+path = "uid://8ay5rlrutcmx"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatterRocks" unique_id=1510017655]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 25.664948, 0, -24.968609)
+script = ExtResource("25_qta6b")
+shape = SubResource("Resource_x3rx7")
+
+[node name="ScatterItem2" type="Node3D" parent="ProtonScatterRocks" unique_id=1507353465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.969223, 0, -10.887161)
+script = ExtResource("24_4yxf6")
+path = "uid://bltmr2xgs8nq1"
+
+[node name="ScatterItem3" type="Node3D" parent="ProtonScatterRocks" unique_id=914002040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4538345, 0, -16.330742)
+script = ExtResource("24_4yxf6")
+path = "uid://ctkii8aivl17n"
+
+[node name="ScatterItem4" type="Node3D" parent="ProtonScatterRocks" unique_id=988918917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.907669, 0, -32.661484)
+script = ExtResource("24_4yxf6")
+path = "uid://b8abs8me7ckgo"
+
+[node name="ProtonScatterForest" type="Node3D" parent="." unique_id=335012625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.18587, 22.86972, -11.388832)
+script = ExtResource("17_aht7i")
+modifier_stack = SubResource("Resource_utia5")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+metadata/_custom_type_script = "uid://pctdl0njt52j"
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatterForest" unique_id=1885478613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4846115, 0, -5.4435806)
+script = ExtResource("24_4yxf6")
+source_scale_multiplier = 2.0
+path = "uid://caqxfqurbp3ku"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatterForest" unique_id=1966687226]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 6.950989, 0, -2.4212503)
+script = ExtResource("25_qta6b")
+shape = SubResource("Resource_4n42c")

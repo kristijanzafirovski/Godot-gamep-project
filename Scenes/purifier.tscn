@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://7apdh8hil4ot"]
+
+[ext_resource type="Script" uid="uid://b3sgim7bpofsx" path="res://Scripts/Game/purifier.gd" id="1_kus48"]
+[ext_resource type="ArrayMesh" uid="uid://mrd4wfao0dsw" path="res://assets/Models/Purifier/purifier.res" id="2_76qru"]
+[ext_resource type="Texture2D" uid="uid://dymecrvogl5am" path="res://assets/Models/Purifier/Meshy_AI_Big_industrial_machin_0210182917_texture.png" id="3_l4777"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ci8p"]
+albedo_texture = ExtResource("3_l4777")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_76qru"]
+size = Vector3(1.9182739, 1.1601563, 1.3083496)
+
+[node name="Purifier" type="Area3D" unique_id=1630797164 groups=["purifier"]]
+script = ExtResource("1_kus48")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2003123153]
+mesh = ExtResource("2_76qru")
+surface_material_override/0 = SubResource("StandardMaterial3D_4ci8p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=873199779]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -0.011688232, -0.080078125, -0.0052490234)
+shape = SubResource("BoxShape3D_76qru")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1355039402]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1754245592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011688232, -0.080078125, -0.0052490234)
+shape = SubResource("BoxShape3D_76qru")

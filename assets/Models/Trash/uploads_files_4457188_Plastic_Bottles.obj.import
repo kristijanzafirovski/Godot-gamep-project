@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cay2r5wcir3y6"
+path="res://.godot/imported/uploads_files_4457188_Plastic_Bottles.obj-acad65e2f96beb8fb0d59471a3c8a9f2.mesh"
+
+[deps]
+
+files=["res://.godot/imported/uploads_files_4457188_Plastic_Bottles.obj-acad65e2f96beb8fb0d59471a3c8a9f2.mesh"]
+
+source_file="res://assets/Models/Trash/uploads_files_4457188_Plastic_Bottles.obj"
+dest_files=["res://.godot/imported/uploads_files_4457188_Plastic_Bottles.obj-acad65e2f96beb8fb0d59471a3c8a9f2.mesh", "res://.godot/imported/uploads_files_4457188_Plastic_Bottles.obj-acad65e2f96beb8fb0d59471a3c8a9f2.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
